@@ -1,0 +1,148 @@
+import { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, useNavigate } from "react-router-dom";
+import { Navigation } from "./components/Navigation";
+import { Hero } from "./components/Hero";
+import { About } from "./components/About";
+import { Projects } from "./components/Projects";
+import { Testimonials } from "./components/Testimonials";
+import { Contact } from "./components/Contact";
+import { Footer } from "./components/Footer";
+import { ProjectsPage } from "./components/ProjectsPage";
+import { AchievementsPage } from "./components/AchievementsPage";
+import { TestimonialsPage } from "./components/TestimonialsPage";
+import { AdminPage } from "./components/AdminPage";
+import { Language } from "./translations";
+import { Toaster } from "sonner@2.0.3";
+
+function HomePage({ language }: { language: Language }) {
+  const location = useLocation();
+
+  useEffect(() => {
+    // Restore scroll position when returning to home page
+    const savedScrollPosition = localStorage.getItem('homeScrollPosition');
+    if (savedScrollPosition) {
+      // Use setTimeout to ensure DOM is fully rendered before scrolling
+      setTimeout(() => {
+        const scrollY = parseInt(savedScrollPosition, 10);
+        window.scrollTo(0, scrollY);
+        localStorage.removeItem('homeScrollPosition');
+      }, 100);
+    }
+    
+    // Check if we should scroll to projects section
+    if (location.state?.scrollToProjects) {
+      const projectsSection = document.getElementById("projects");
+      if (projectsSection) {
+        projectsSection.scrollIntoView({ behavior: "smooth" });
+      }
+      // Clear the state after scrolling
+      window.history.replaceState({}, document.title);
+    }
+  }, [location]);
+
+  return (
+    <main>
+      <Hero language={language} />
+      <About language={language} />
+      <Projects language={language} />
+      <Testimonials language={language} />
+      <Contact language={language} />
+      <Footer language={language} />
+    </main>
+  );
+}
+
+// GitHub Pages redirect handler component - must be INSIDE Router
+function RedirectHandler() {
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    // GitHub Pages SPA redirect handling
+    // When 404.html redirects here, it saves the intended path in sessionStorage
+    const redirect = sessionStorage.getItem('redirect');
+    if (redirect) {
+      console.log('🔄 GitHub Pages redirect detected:', redirect);
+      sessionStorage.removeItem('redirect');
+      // Use navigate instead of window.history for proper React Router handling
+      navigate(redirect, { replace: true });
+    }
+  }, [navigate]);
+  
+  return null;
+}
+
+export default function App() {
+  const [language, setLanguage] = useState<Language>(() => {
+    // Load language from localStorage or default to "cs"
+    const savedLanguage = localStorage.getItem("language");
+    return (savedLanguage === "cs" || savedLanguage === "en") ? savedLanguage : "cs";
+  });
+
+  // Save language to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
+
+  useEffect(() => {
+    document.title = "Filip Eckstein - CAD & 3D printing Portfolio";
+    
+    // Ensure viewport meta tag exists for model-viewer
+    if (!document.querySelector('meta[name="viewport"]')) {
+      const meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, initial-scale=1.0';
+      document.head.appendChild(meta);
+    }
+  }, []);
+
+  return (
+    <Router>
+      <RedirectHandler />
+      <div className="min-h-screen bg-background">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Navigation language={language} onLanguageChange={setLanguage} />
+                <HomePage language={language} />
+              </>
+            }
+          />
+          <Route
+            path="/projects/*"
+            element={
+              <>
+                <Navigation language={language} onLanguageChange={setLanguage} />
+                <ProjectsPage language={language} onLanguageChange={setLanguage} />
+              </>
+            }
+          />
+          <Route
+            path="/achievements"
+            element={
+              <>
+                <Navigation language={language} onLanguageChange={setLanguage} />
+                <AchievementsPage language={language} onLanguageChange={setLanguage} />
+              </>
+            }
+          />
+          <Route
+            path="/testimonials"
+            element={
+              <>
+                <Navigation language={language} onLanguageChange={setLanguage} />
+                <TestimonialsPage language={language} />
+              </>
+            }
+          />
+          <Route
+            path="/admin"
+            element={<AdminPage language={language} />}
+          />
+        </Routes>
+        <Toaster />
+      </div>
+    </Router>
+  );
+}
