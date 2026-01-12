@@ -1,0 +1,16 @@
+# Nginx configuration for SPA routing
+# Add this to your nginx server block:
+
+location / {
+  try_files $uri $uri/ /index.html;
+}
+
+# Security headers
+add_header X-Content-Type-Options "nosniff" always;
+add_header X-Frame-Options "DENY" always;
+add_header X-XSS-Protection "1; mode=block" always;
+
+# If you're using a subdirectory instead of root:
+# location /your-app/ {
+#   try_files $uri $uri/ /your-app/index.html;
+# }
