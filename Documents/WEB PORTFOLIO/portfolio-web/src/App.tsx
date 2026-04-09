@@ -13,9 +13,44 @@ import { TestimonialsPage } from "./components/TestimonialsPage";
 import { AdminPage } from "./components/AdminPage";
 import { Language } from "./translations";
 import { Toaster } from "sonner@2.0.3";
+import { useScrollReveal } from "./utils/useScrollReveal";
+import { RemoteContentProvider } from "./context/RemoteContentContext";
+import { projectId, publicAnonKey } from "./utils/supabase/info";
+
+/**
+ * Prefetches project thumbnail images in the background after the hero loads.
+ * Delay of 1500ms ensures hero carousel images always get network priority first.
+ */
+function useProjectImagePreload(delayMs = 1500) {
+  useEffect(() => {
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://${projectId}.supabase.co/functions/v1/make-server-635fd90e/projects`,
+          { headers: { Authorization: `Bearer ${publicAnonKey}` } }
+        );
+        if (!res.ok) return;
+        const data = await res.json();
+        const projects: any[] = (data.projects || []).filter((p: any) => p.published !== false);
+        // Preload first image of each project
+        projects.forEach((p) => {
+          if (p.images && p.images[0]) {
+            const img = new Image();
+            img.src = p.images[0];
+          }
+        });
+      } catch {
+        // silently fail — preloading is best-effort
+      }
+    }, delayMs);
+    return () => clearTimeout(timer);
+  }, [delayMs]);
+}
 
 function HomePage({ language }: { language: Language }) {
   const location = useLocation();
+  useScrollReveal(".reveal");
+  useProjectImagePreload(1500); // prefetch project images after hero
 
   useEffect(() => {
     // Restore scroll position when returning to home page
@@ -96,53 +131,55 @@ export default function App() {
   }, []);
 
   return (
-    <Router>
-      <RedirectHandler />
-      <div className="min-h-screen bg-background">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <Navigation language={language} onLanguageChange={setLanguage} />
-                <HomePage language={language} />
-              </>
-            }
-          />
-          <Route
-            path="/projects/*"
-            element={
-              <>
-                <Navigation language={language} onLanguageChange={setLanguage} />
-                <ProjectsPage language={language} onLanguageChange={setLanguage} />
-              </>
-            }
-          />
-          <Route
-            path="/achievements"
-            element={
-              <>
-                <Navigation language={language} onLanguageChange={setLanguage} />
-                <AchievementsPage language={language} onLanguageChange={setLanguage} />
-              </>
-            }
-          />
-          <Route
-            path="/testimonials"
-            element={
-              <>
-                <Navigation language={language} onLanguageChange={setLanguage} />
-                <TestimonialsPage language={language} />
-              </>
-            }
-          />
-          <Route
-            path="/admin"
-            element={<AdminPage language={language} />}
-          />
-        </Routes>
-        <Toaster />
-      </div>
-    </Router>
+    <RemoteContentProvider>
+      <Router>
+        <RedirectHandler />
+        <div className="min-h-screen bg-background">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Navigation language={language} onLanguageChange={setLanguage} />
+                  <HomePage language={language} />
+                </>
+              }
+            />
+            <Route
+              path="/projects/*"
+              element={
+                <>
+                  <Navigation language={language} onLanguageChange={setLanguage} />
+                  <ProjectsPage language={language} onLanguageChange={setLanguage} />
+                </>
+              }
+            />
+            <Route
+              path="/achievements"
+              element={
+                <>
+                  <Navigation language={language} onLanguageChange={setLanguage} />
+                  <AchievementsPage language={language} onLanguageChange={setLanguage} />
+                </>
+              }
+            />
+            <Route
+              path="/testimonials"
+              element={
+                <>
+                  <Navigation language={language} onLanguageChange={setLanguage} />
+                  <TestimonialsPage language={language} />
+                </>
+              }
+            />
+            <Route
+              path="/admin"
+              element={<AdminPage language={language} />}
+            />
+          </Routes>
+          <Toaster />
+        </div>
+      </Router>
+    </RemoteContentProvider>
   );
 }

@@ -7,9 +7,9 @@ import { Language, translations } from "../translations";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { projectId, publicAnonKey } from '../utils/supabase/info';
-import electricalModel from "figma:asset/62d8593efd79e12a0b06122e6007ca0c4730824d.png";
-import streamDeck from "figma:asset/4bbad57f64b1382cf879e6728a7572a7f2cc341d.png";
-import challengerModel from "figma:asset/e1ce0d6f62fe2dacdb3fbe6f747b60956409fd42.png";
+import electricalModel from "figma:asset/62d8593efd79e12a0b06122e6007ca0c4730824d.webp";
+import streamDeck from "figma:asset/4bbad57f64b1382cf879e6728a7572a7f2cc341d.webp";
+import challengerModel from "figma:asset/e1ce0d6f62fe2dacdb3fbe6f747b60956409fd42.webp";
 
 interface ProjectsProps {
   language: Language;
@@ -71,7 +71,7 @@ export function Projects({ language }: ProjectsProps) {
         const data = await projectsResponse.json();
         allProjects = (data.projects || []).filter((p: Project) => p.published !== false);
       }
-      
+
       if (contentResponse.ok) {
         const data = await contentResponse.json();
         console.log('📥 Projects.tsx - Content response:', data);
@@ -92,15 +92,15 @@ export function Projects({ language }: ProjectsProps) {
 
       // Determine which projects to feature using the featured field
       let featured: Project[] = [];
-      
+
       console.log('🔍 Projects.tsx - Featured selection logic:');
       console.log('📊 All projects count:', allProjects.length);
-      
+
       // First, try to get projects marked as featured
       featured = allProjects.filter((p: any) => p.featured === true);
-      
+
       console.log('⭐ Projects marked as featured:', featured.map(p => ({ id: p.id, title: p.title })));
-      
+
       // If no featured projects, fallback to auto-select first 3 by sortOrder
       if (featured.length === 0) {
         featured = allProjects
@@ -110,7 +110,7 @@ export function Projects({ language }: ProjectsProps) {
             return orderA - orderB;
           })
           .slice(0, 3);
-        
+
         console.log('🔄 Auto-selected projects by sortOrder:', featured.map(p => ({ id: p.id, title: p.title, sortOrder: p.sortOrder })));
       }
 
@@ -127,15 +127,15 @@ export function Projects({ language }: ProjectsProps) {
   const title = language === 'cs'
     ? (projectsContent?.projectsTitleCs || t.title)
     : (projectsContent?.projectsTitle || t.title);
-    
+
   const subtitle = language === 'cs'
     ? (projectsContent?.projectsSubtitleCs || t.subtitle)
     : (projectsContent?.projectsSubtitle || t.subtitle);
-    
+
   const viewAll = language === 'cs'
     ? (projectsContent?.projectsViewAllCs || t.viewAll)
     : (projectsContent?.projectsViewAll || t.viewAll);
-    
+
   const viewDetails = language === 'cs'
     ? (projectsContent?.projectsViewDetailsCs || t.viewDetails)
     : (projectsContent?.projectsViewDetails || t.viewDetails);
@@ -146,7 +146,7 @@ export function Projects({ language }: ProjectsProps) {
       id: 'fallback-1',
       title: language === "en" ? "Educational Electrical Model" : "Výukový elektrotechnický model",
       titleCs: "Výukový elektrotechnický model",
-      description: language === "en" 
+      description: language === "en"
         ? "Model showing basic wiring connections for light switches in electrical installations."
         : "Model ukazující základní zapojení vypínačů světel v elektroinstalaci.",
       descriptionCs: "Model ukazující základní zapojení vypínačů světel v elektroinstalaci.",
@@ -205,8 +205,8 @@ export function Projects({ language }: ProjectsProps) {
     <section id="projects" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-center mb-4 text-foreground">{title}</h2>
-          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto">
+          <h2 className="text-center mb-4 text-foreground reveal reveal-up">{title}</h2>
+          <p className="text-center text-muted-foreground mb-12 max-w-2xl mx-auto reveal reveal-up delay-150">
             {subtitle}
           </p>
 
@@ -216,9 +216,9 @@ export function Projects({ language }: ProjectsProps) {
               const displayDescription = language === "cs" ? (project.descriptionCs || '') : project.description;
               const displayTags = language === "cs" ? (project.tagsCs || []) : (project.tags || []);
               const firstImage = project.images && project.images.length > 0 ? project.images[0] : null;
-              
+
               return (
-                <Card key={project.id} className="overflow-hidden flex flex-col">
+                <Card key={project.id} className={`overflow-hidden flex flex-col reveal reveal-scale-up delay-${[200, 350, 500][featuredProjects.indexOf(project)] ?? 200}`}>
                   <div className="h-48 overflow-hidden relative">
                     {project.hasAward && (
                       <div className="absolute top-3 right-3 z-10 bg-primary text-primary-foreground px-3 py-1 rounded-full flex items-center gap-1 shadow-lg">
@@ -229,7 +229,7 @@ export function Projects({ language }: ProjectsProps) {
                     <ImageWithFallback
                       src={firstImage || electricalModel}
                       alt={displayTitle}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                      className={`w-full h-full object-cover transition-transform duration-300 hover:scale-110 ${project.slug === 'diy-stream-deck' || project.id === 'fallback-2' ? 'rotate-90' : ''}`}
                     />
                   </div>
                   <CardHeader>
@@ -246,8 +246,9 @@ export function Projects({ language }: ProjectsProps) {
                     </div>
                   </CardContent>
                   <CardFooter className="gap-2">
-                    <Button 
-                      size="sm" 
+                    <Button
+                      variant="secondary"
+                      size="sm"
                       className="flex-1"
                       onClick={() => {
                         localStorage.setItem('homeScrollPosition', window.scrollY.toString());
@@ -265,12 +266,13 @@ export function Projects({ language }: ProjectsProps) {
           </div>
 
           <div className="text-center">
-            <Button 
-              size="lg" 
+            <Button
+              variant="secondary"
+              size="lg"
               onClick={() => {
                 localStorage.setItem('homeScrollPosition', window.scrollY.toString());
                 navigateToProjects("/projects");
-              }} 
+              }}
               className="group"
             >
               {viewAll}

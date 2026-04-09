@@ -21,10 +21,10 @@ export default [
     technologies: ["3D printing", "Electronics"],
     award: "1st Place - Educational Model Competition 2025",
     images: [
-      "figma:asset/62d8593efd79e12a0b06122e6007ca0c4730824d.png",
-      "figma:asset/6fdf721683aec5ec429e2d6bdc5651ef0787378e.png",
-      "figma:asset/ea097ce0212ea99548672bdadc5ebf283fc081e6.png",
-      "figma:asset/82c29c9796a291b2ac98bc4c6cc9877368cd956d.png"
+      "figma:asset/62d8593efd79e12a0b06122e6007ca0c4730824d.webp",
+      "figma:asset/6fdf721683aec5ec429e2d6bdc5651ef0787378e.webp",
+      "figma:asset/ea097ce0212ea99548672bdadc5ebf283fc081e6.webp",
+      "figma:asset/82c29c9796a291b2ac98bc4c6cc9877368cd956d.webp"
     ],
     specs: [
       { label: "Materials", value: "PLA, PETG" },
@@ -51,7 +51,7 @@ export default [
     materials: ["PLA"],
     printTechnology: ["FDM"],
     technologies: ["Arduino"],
-    images: ["figma:asset/4bbad57f64b1382cf879e6728a7572a7f2cc341d.png"],
+    images: ["figma:asset/4bbad57f64b1382cf879e6728a7572a7f2cc341d.webp"],
     specs: [
       { label: "Materials", value: "PLA" },
       { label: "Type of print", value: "FDM" },
@@ -78,13 +78,13 @@ export default [
     printTechnology: ["FDM"],
     technologies: ["LED lighting"],
     images: [
-      "figma:asset/e1ce0d6f62fe2dacdb3fbe6f747b60956409fd42.png",
-      "figma:asset/0d1bb588e5992c2c72ed3480310796d5395f1293.png",
-      "figma:asset/d260ee437c480774e21d3d6ada2358bab82117f6.png",
-      "figma:asset/c64afad24b6cd0e757f5880418fd6a4c683b2755.png",
-      "figma:asset/a04cd99685596c45b53450e938b4403696b6c4d4.png",
-      "figma:asset/add07ce6705c3086550c25cd898060e3804af0fb.png",
-      "figma:asset/fa6b4478e730d77bd6701db2087b59e2f8b4f762.png"
+      "figma:asset/e1ce0d6f62fe2dacdb3fbe6f747b60956409fd42.webp",
+      "figma:asset/0d1bb588e5992c2c72ed3480310796d5395f1293.webp",
+      "figma:asset/d260ee437c480774e21d3d6ada2358bab82117f6.webp",
+      "figma:asset/c64afad24b6cd0e757f5880418fd6a4c683b2755.webp",
+      "figma:asset/a04cd99685596c45b53450e938b4403696b6c4d4.webp",
+      "figma:asset/add07ce6705c3086550c25cd898060e3804af0fb.webp",
+      "figma:asset/fa6b4478e730d77bd6701db2087b59e2f8b4f762.webp"
     ],
     specs: [
       { label: "Materials", value: "PLA" },
@@ -112,9 +112,9 @@ export default [
     printTechnology: ["FDM"],
     technologies: ["3D modeling", "Character design"],
     images: [
-      "figma:asset/b2bfe5ea9f06c761db0f48d76c137fd2ecc0e5d8.png",
-      "figma:asset/29b5f5bebf61bd09c95fdfec8a6d71f569e49c7e.png",
-      "figma:asset/bc620491615b7a9f82e72dafd9e743cf98e60b95.png"
+      "figma:asset/b2bfe5ea9f06c761db0f48d76c137fd2ecc0e5d8.webp",
+      "figma:asset/29b5f5bebf61bd09c95fdfec8a6d71f569e49c7e.webp",
+      "figma:asset/bc620491615b7a9f82e72dafd9e743cf98e60b95.webp"
     ],
     specs: [
       { label: "Materials", value: "PLA" },
@@ -141,7 +141,7 @@ export default [
     materials: ["PETG"],
     printTechnology: ["FDM"],
     technologies: ["Functional design", "Modular design"],
-    images: ["figma:asset/e1aac002f66c73c55758770fc2b9a28181c72ddf.png"],
+    images: ["figma:asset/e1aac002f66c73c55758770fc2b9a28181c72ddf.webp"],
     specs: [
       { label: "Materials", value: "PETG" },
       { label: "Type of print", value: "FDM" },
@@ -167,7 +167,7 @@ export default [
     materials: ["PETG"],
     printTechnology: ["FDM"],
     technologies: ["Mold design", "Industrial design"],
-    images: ["figma:asset/8d11d5a409f9c1a7e6b2d90a1f509bed4e4182f2.png"],
+    images: ["figma:asset/8d11d5a409f9c1a7e6b2d90a1f509bed4e4182f2.webp"],
     specs: [
       { label: "Materials", value: "PETG" },
       { label: "Type of print", value: "FDM" },
@@ -194,9 +194,9 @@ export default [
     printTechnology: ["FDM"],
     technologies: ["Functional design", "Storage solution"],
     images: [
-      "figma:asset/c1fdfa35041a1996aeb98d1acf3b0100e2cd9383.png",
-      "figma:asset/543c2974b7d44cf8e9f0ecd160c51975df3af685.png",
-      "figma:asset/6ced74a283c77056e9ded6c7969b061b2f1d8312.png"
+      "figma:asset/c1fdfa35041a1996aeb98d1acf3b0100e2cd9383.webp",
+      "figma:asset/543c2974b7d44cf8e9f0ecd160c51975df3af685.webp",
+      "figma:asset/6ced74a283c77056e9ded6c7969b061b2f1d8312.webp"
     ],
     specs: [
       { label: "Materials", value: "PLA" },
@@ -223,7 +223,7 @@ export default [
     materials: ["PETG"],
     printTechnology: ["FDM"],
     technologies: ["Ergonomic design", "Gaming peripheral"],
-    images: ["figma:asset/9f9a2451964984c1d864c97ad7e7234214c5f4ae.png"],
+    images: ["figma:asset/9f9a2451964984c1d864c97ad7e7234214c5f4ae.webp"],
     specs: [
       { label: "Materials", value: "PETG" },
       { label: "Type of print", value: "FDM" },
@@ -250,9 +250,9 @@ export default [
     printTechnology: ["FDM"],
     technologies: ["3D modeling", "Multi-color 3D printing"],
     images: [
-      "figma:asset/e6b8001612a40e8233bdcedfaa275041607cfe89.png",
-      "figma:asset/8eda25fcf6f45a9c9ddc124d3d9d6803751e161d.png",
-      "figma:asset/bdcb68220507a7f872007542c1fee3dec4fe5cbe.png"
+      "figma:asset/e6b8001612a40e8233bdcedfaa275041607cfe89.webp",
+      "figma:asset/8eda25fcf6f45a9c9ddc124d3d9d6803751e161d.webp",
+      "figma:asset/bdcb68220507a7f872007542c1fee3dec4fe5cbe.webp"
     ],
     specs: [
       { label: "Materials", value: "PLA" },
@@ -279,7 +279,7 @@ export default [
     materials: ["Model only"],
     printTechnology: ["Model only"],
     technologies: ["Logo to 3D conversion"],
-    images: ["figma:asset/ee94e6501553b11fbd35a1adab0a6138b6d4f5a8.png"],
+    images: ["figma:asset/ee94e6501553b11fbd35a1adab0a6138b6d4f5a8.webp"],
     specs: [
       { label: "Materials", value: "Model only" },
       { label: "Type of print", value: "Model only" },
@@ -306,9 +306,9 @@ export default [
     printTechnology: ["FDM"],
     technologies: ["Functional design", "Custom adapter"],
     images: [
-      "figma:asset/fd307fb7e5ef5c58020b85bd7a087eea59658040.png",
-      "figma:asset/5a9f88fc844d6db3d2efb54f8d1e045057c3f87e.png",
-      "figma:asset/0507df6a9d069084333ce2720237321889b59d90.png"
+      "figma:asset/fd307fb7e5ef5c58020b85bd7a087eea59658040.webp",
+      "figma:asset/5a9f88fc844d6db3d2efb54f8d1e045057c3f87e.webp",
+      "figma:asset/0507df6a9d069084333ce2720237321889b59d90.webp"
     ],
     specs: [
       { label: "Materials", value: "PETG" },
@@ -335,7 +335,7 @@ export default [
     materials: ["PETG"],
     printTechnology: ["FDM"],
     technologies: ["Functional design"],
-    images: ["figma:asset/6bec7e92de6ea913ef52a4d6fb28208cecb04bf4.png"],
+    images: ["figma:asset/6bec7e92de6ea913ef52a4d6fb28208cecb04bf4.webp"],
     specs: [
       { label: "Materials", value: "PETG" },
       { label: "Type of print", value: "FDM" },
@@ -361,7 +361,7 @@ export default [
     materials: ["PLA"],
     printTechnology: ["FDM"],
     technologies: ["Architectural modeling"],
-    images: ["figma:asset/2087e6eab28d687630042f8ca41ec8a6d41e0c4d.png"],
+    images: ["figma:asset/2087e6eab28d687630042f8ca41ec8a6d41e0c4d.webp"],
     specs: [
       { label: "Materials", value: "PLA" },
       { label: "Type of print", value: "FDM" },
@@ -387,7 +387,7 @@ export default [
     materials: ["PLA"],
     printTechnology: ["FDM"],
     technologies: ["Terrain modeling"],
-    images: ["figma:asset/4364ce80ae498b0c0b47e052d61a50736082ac79.png"],
+    images: ["figma:asset/4364ce80ae498b0c0b47e052d61a50736082ac79.webp"],
     specs: [
       { label: "Materials", value: "PLA" },
       { label: "Type of print", value: "FDM" },

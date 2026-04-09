@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, Languages, ArrowLeft } from "lucide-react";
+import { Menu, X, Languages, ArrowLeft, Moon, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 import { Language, translations } from "../translations";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -15,6 +15,15 @@ export function Navigation({ language, onLanguageChange }: NavigationProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showHint, setShowHint] = useState(true);
+  const [isDark, setIsDark] = useState(() => {
+    // On first render, read from localStorage or system preference
+    if (typeof window !== "undefined") {
+      const stored = localStorage.getItem("theme");
+      if (stored) return stored === "dark";
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    return false;
+  });
   const location = useLocation();
   const navigate = useNavigate();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -33,6 +42,18 @@ export function Navigation({ language, onLanguageChange }: NavigationProps) {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Apply dark class to <html> on change
+  useEffect(() => {
+    const root = document.documentElement;
+    if (isDark) {
+      root.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    } else {
+      root.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [isDark]);
 
   // Zavření menu při kliknutí mimo
   useEffect(() => {
@@ -59,7 +80,6 @@ export function Navigation({ language, onLanguageChange }: NavigationProps) {
 
   const navLinks = [
     { href: "#home", label: t.home, isHash: true },
-    { href: "#about", label: t.about, isHash: true },
     { href: "/projects", label: t.projects, isHash: false },
     { href: "/achievements", label: t.achievements, isHash: false },
     { href: "#testimonials", label: t.testimonials, isHash: true },
@@ -91,7 +111,7 @@ export function Navigation({ language, onLanguageChange }: NavigationProps) {
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled 
           ? "bg-background/80 backdrop-blur-md shadow-md" 
-          : "md:bg-transparent bg-white"
+          : "md:bg-transparent bg-background"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -152,30 +172,42 @@ export function Navigation({ language, onLanguageChange }: NavigationProps) {
               )
             ))}
             
-            {/* Language Switcher */}
-            <div className="flex items-center gap-2 ml-4">
-              <Languages className="h-4 w-4 text-muted-foreground" />
+            {/* Dark Mode + Language Switcher */}
+            <div className="flex items-center gap-4 ml-4">
+              {/* Dark mode toggle */}
               <button
-                onClick={() => handleLanguageChange("en")}
-                className={`transition-colors ${
-                  language === "en" 
-                    ? "text-foreground" 
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
+                onClick={() => setIsDark(!isDark)}
+                className="w-8 h-8 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all duration-200"
+                title={isDark ? "Switch to light mode" : "Switch to dark mode"}
               >
-                EN
+                {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
               </button>
-              <span className="text-muted-foreground">/</span>
-              <button
-                onClick={() => handleLanguageChange("cs")}
-                className={`transition-colors ${
-                  language === "cs" 
-                    ? "text-foreground" 
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                CZ
-              </button>
+
+              {/* Language */}
+              <div className="flex items-center gap-2">
+                <Languages className="h-4 w-4 text-muted-foreground" />
+                <button
+                  onClick={() => handleLanguageChange("en")}
+                  className={`transition-colors ${
+                    language === "en" 
+                      ? "text-foreground" 
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  EN
+                </button>
+                <span className="text-muted-foreground">/</span>
+                <button
+                  onClick={() => handleLanguageChange("cs")}
+                  className={`transition-colors ${
+                    language === "cs" 
+                      ? "text-foreground" 
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  CZ
+                </button>
+              </div>
             </div>
           </div>
 
@@ -192,7 +224,7 @@ export function Navigation({ language, onLanguageChange }: NavigationProps) {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden -mx-4 -mt-4 px-6 pt-8 pb-6 bg-white shadow-lg" ref={mobileMenuRef}>
+          <div className="md:hidden -mx-4 -mt-4 px-6 pt-8 pb-6 bg-background shadow-lg" ref={mobileMenuRef}>
             <div className="flex flex-col gap-4">
               {navLinks.map((link) => (
                 link.isHash ? (
@@ -226,29 +258,38 @@ export function Navigation({ language, onLanguageChange }: NavigationProps) {
                 )
               ))}
               
-              {/* Mobile Language Switcher */}
-              <div className="flex items-center gap-2 pt-2 border-t border-border">
-                <Languages className="h-4 w-4 text-muted-foreground" />
+              {/* Mobile Language Switcher + Dark Mode */}
+              <div className="flex items-center justify-between pt-2 border-t border-border">
+                <div className="flex items-center gap-2">
+                  <Languages className="h-4 w-4 text-muted-foreground" />
+                  <button
+                    onClick={() => handleLanguageChange("en")}
+                    className={`transition-colors ${
+                      language === "en" 
+                        ? "text-foreground" 
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    EN
+                  </button>
+                  <span className="text-muted-foreground">/</span>
+                  <button
+                    onClick={() => handleLanguageChange("cs")}
+                    className={`transition-colors ${
+                      language === "cs" 
+                        ? "text-foreground" 
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    CZ
+                  </button>
+                </div>
                 <button
-                  onClick={() => handleLanguageChange("en")}
-                  className={`transition-colors ${
-                    language === "en" 
-                      ? "text-foreground" 
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  onClick={() => setIsDark(!isDark)}
+                  className="w-8 h-8 flex items-center justify-center rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/60 transition-all duration-200"
+                  title={isDark ? "Světlý režim" : "Tmavý režim"}
                 >
-                  EN
-                </button>
-                <span className="text-muted-foreground">/</span>
-                <button
-                  onClick={() => handleLanguageChange("cs")}
-                  className={`transition-colors ${
-                    language === "cs" 
-                      ? "text-foreground" 
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  CZ
+                  {isDark ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
                 </button>
               </div>
             </div>

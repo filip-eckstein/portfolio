@@ -21,8 +21,8 @@ export default [
     categoryCs: "Vzdělávací modely - Elektrotechnika",
     projectId: "educational-electrical-model",
     contestUrl: "https://www.fs.tul.cz/soutez",
-    image: "figma:asset/c77c3ebe496092dbfaeb7fa04f4f704709dde119.png",
-    presentationImage: "figma:asset/82c29c9796a291b2ac98bc4c6cc9877368cd956d.png",
+    image: "figma:asset/c77c3ebe496092dbfaeb7fa04f4f704709dde119.webp",
+    presentationImage: "figma:asset/82c29c9796a291b2ac98bc4c6cc9877368cd956d.webp",
   },
   {
     id: "achievement-fusion360-cert",
@@ -55,7 +55,7 @@ export default [
       "Návrh plechových dílů",
       "Povrchové modelování"
     ],
-    certificateImage: "figma:asset/de31ab162e323655808e0f15de06ec93c700bbdd.png",
+    certificateImage: "",
     certificatePdf: "/certificate.pdf",
   },
 ];

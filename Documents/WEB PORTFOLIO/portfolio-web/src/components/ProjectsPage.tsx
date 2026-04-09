@@ -11,37 +11,37 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { projectId, publicAnonKey } from '../utils/supabase/info';
 import { toast } from "sonner@2.0.3";
-import electricalModel from "figma:asset/62d8593efd79e12a0b06122e6007ca0c4730824d.png";
-import electricalModel2 from "figma:asset/6fdf721683aec5ec429e2d6bdc5651ef0787378e.png";
-import electricalModel3 from "figma:asset/ea097ce0212ea99548672bdadc5ebf283fc081e6.png";
-import electricalModel4 from "figma:asset/82c29c9796a291b2ac98bc4c6cc9877368cd956d.png";
-import streamDeck from "figma:asset/4bbad57f64b1382cf879e6728a7572a7f2cc341d.png";
-import challengerModel from "figma:asset/e1ce0d6f62fe2dacdb3fbe6f747b60956409fd42.png";
-import challengerModel2 from "figma:asset/0d1bb588e5992c2c72ed3480310796d5395f1293.png";
-import challengerModel3 from "figma:asset/d260ee437c480774e21d3d6ada2358bab82117f6.png";
-import challengerModel4 from "figma:asset/c64afad24b6cd0e757f5880418fd6a4c683b2755.png";
-import challengerModel5 from "figma:asset/a04cd99685596c45b53450e938b4403696b6c4d4.png";
-import challengerModel6 from "figma:asset/add07ce6705c3086550c25cd898060e3804af0fb.png";
-import challengerModel7 from "figma:asset/fa6b4478e730d77bd6701db2087b59e2f8b4f762.png";
-import characterModels from "figma:asset/b2bfe5ea9f06c761db0f48d76c137fd2ecc0e5d8.png";
-import characterModels2 from "figma:asset/29b5f5bebf61bd09c95fdfec8a6d71f569e49c7e.png";
-import characterModels3 from "figma:asset/bc620491615b7a9f82e72dafd9e743cf98e60b95.png";
-import toolOrganizer from "figma:asset/e1aac002f66c73c55758770fc2b9a28181c72ddf.png";
-import planterMold from "figma:asset/8d11d5a409f9c1a7e6b2d90a1f509bed4e4182f2.png";
-import batteryOrganizer from "figma:asset/c1fdfa35041a1996aeb98d1acf3b0100e2cd9383.png";
-import batteryOrganizer2 from "figma:asset/543c2974b7d44cf8e9f0ecd160c51975df3af685.png";
-import batteryOrganizer3 from "figma:asset/6ced74a283c77056e9ded6c7969b061b2f1d8312.png";
-import paddleShifter from "figma:asset/9f9a2451964984c1d864c97ad7e7234214c5f4ae.png";
-import toyFigure from "figma:asset/e6b8001612a40e8233bdcedfaa275041607cfe89.png";
-import toyFigure2 from "figma:asset/8eda25fcf6f45a9c9ddc124d3d9d6803751e161d.png";
-import toyFigure3 from "figma:asset/bdcb68220507a7f872007542c1fee3dec4fe5cbe.png";
-import vacuumAdapter from "figma:asset/fd307fb7e5ef5c58020b85bd7a087eea59658040.png";
-import vacuumAdapter2 from "figma:asset/5a9f88fc844d6db3d2efb54f8d1e045057c3f87e.png";
-import vacuumAdapter3 from "figma:asset/0507df6a9d069084333ce2720237321889b59d90.png";
-import kiteParts from "figma:asset/6bec7e92de6ea913ef52a4d6fb28208cecb04bf4.png";
-import sporilovModel from "figma:asset/2087e6eab28d687630042f8ca41ec8a6d41e0c4d.png";
-import prokopskeUdoli from "figma:asset/4364ce80ae498b0c0b47e052d61a50736082ac79.png";
-import teamKeychain from "figma:asset/ee94e6501553b11fbd35a1adab0a6138b6d4f5a8.png";
+import electricalModel from "figma:asset/62d8593efd79e12a0b06122e6007ca0c4730824d.webp";
+import electricalModel2 from "figma:asset/6fdf721683aec5ec429e2d6bdc5651ef0787378e.webp";
+import electricalModel3 from "figma:asset/ea097ce0212ea99548672bdadc5ebf283fc081e6.webp";
+import electricalModel4 from "figma:asset/82c29c9796a291b2ac98bc4c6cc9877368cd956d.webp";
+import streamDeck from "figma:asset/4bbad57f64b1382cf879e6728a7572a7f2cc341d.webp";
+import challengerModel from "figma:asset/e1ce0d6f62fe2dacdb3fbe6f747b60956409fd42.webp";
+import challengerModel2 from "figma:asset/0d1bb588e5992c2c72ed3480310796d5395f1293.webp";
+import challengerModel3 from "figma:asset/d260ee437c480774e21d3d6ada2358bab82117f6.webp";
+import challengerModel4 from "figma:asset/c64afad24b6cd0e757f5880418fd6a4c683b2755.webp";
+import challengerModel5 from "figma:asset/a04cd99685596c45b53450e938b4403696b6c4d4.webp";
+import challengerModel6 from "figma:asset/add07ce6705c3086550c25cd898060e3804af0fb.webp";
+import challengerModel7 from "figma:asset/fa6b4478e730d77bd6701db2087b59e2f8b4f762.webp";
+import characterModels from "figma:asset/b2bfe5ea9f06c761db0f48d76c137fd2ecc0e5d8.webp";
+import characterModels2 from "figma:asset/29b5f5bebf61bd09c95fdfec8a6d71f569e49c7e.webp";
+import characterModels3 from "figma:asset/bc620491615b7a9f82e72dafd9e743cf98e60b95.webp";
+import toolOrganizer from "figma:asset/e1aac002f66c73c55758770fc2b9a28181c72ddf.webp";
+import planterMold from "figma:asset/8d11d5a409f9c1a7e6b2d90a1f509bed4e4182f2.webp";
+import batteryOrganizer from "figma:asset/c1fdfa35041a1996aeb98d1acf3b0100e2cd9383.webp";
+import batteryOrganizer2 from "figma:asset/543c2974b7d44cf8e9f0ecd160c51975df3af685.webp";
+import batteryOrganizer3 from "figma:asset/6ced74a283c77056e9ded6c7969b061b2f1d8312.webp";
+import paddleShifter from "figma:asset/9f9a2451964984c1d864c97ad7e7234214c5f4ae.webp";
+import toyFigure from "figma:asset/e6b8001612a40e8233bdcedfaa275041607cfe89.webp";
+import toyFigure2 from "figma:asset/8eda25fcf6f45a9c9ddc124d3d9d6803751e161d.webp";
+import toyFigure3 from "figma:asset/bdcb68220507a7f872007542c1fee3dec4fe5cbe.webp";
+import vacuumAdapter from "figma:asset/fd307fb7e5ef5c58020b85bd7a087eea59658040.webp";
+import vacuumAdapter2 from "figma:asset/5a9f88fc844d6db3d2efb54f8d1e045057c3f87e.webp";
+import vacuumAdapter3 from "figma:asset/0507df6a9d069084333ce2720237321889b59d90.webp";
+import kiteParts from "figma:asset/6bec7e92de6ea913ef52a4d6fb28208cecb04bf4.webp";
+import sporilovModel from "figma:asset/2087e6eab28d687630042f8ca41ec8a6d41e0c4d.webp";
+import prokopskeUdoli from "figma:asset/4364ce80ae498b0c0b47e052d61a50736082ac79.webp";
+import teamKeychain from "figma:asset/ee94e6501553b11fbd35a1adab0a6138b6d4f5a8.webp";
 
 interface Project {
   id: string;
@@ -702,7 +702,7 @@ export function ProjectsPage({ language, onLanguageChange }: ProjectsPageProps) 
                           {language === "en" ? "3D Model" : "3D Model"}
                         </h3>
                       </div>
-                      <div className="relative w-full h-[500px] bg-muted rounded-lg overflow-hidden">
+                      <div className="relative w-full h-[500px] overflow-hidden">
                         <model-viewer
                           src={selectedProject.model3dUrl}
                           alt={selectedProject.title}
@@ -713,8 +713,8 @@ export function ProjectsPage({ language, onLanguageChange }: ProjectsPageProps) 
                           style={{
                             width: '100%',
                             height: '100%',
-                            backgroundColor: '#d1d5db', // Medium gray background - not too dark, not too bright
-                            '--poster-color': '#d1d5db',
+                            backgroundColor: 'transparent',
+                            '--poster-color': 'transparent',
                           } as any}
                         ></model-viewer>
                       </div>
@@ -741,11 +741,11 @@ export function ProjectsPage({ language, onLanguageChange }: ProjectsPageProps) 
                           setEnlargedImageIndex(idx);
                         }}
                       >
-                        <ImageWithFallback
-                          src={image}
-                          alt={`${selectedProject.title} - View ${idx + 1}`}
-                          className={useObjectCover ? "w-full h-80 object-cover" : "w-full h-80 object-contain"}
-                        />
+                          <ImageWithFallback
+                            src={image}
+                            alt={`${selectedProject.title} - View ${idx + 1}`}
+                            className={`${useObjectCover ? "w-full h-80 object-cover" : "w-full h-80 object-contain"} ${selectedProject.slug === 'diy-stream-deck' || selectedProject.id === 'fallback-2' ? 'rotate-90' : ''}`}
+                          />
                       </Card>
                     );
                   })}
@@ -802,7 +802,7 @@ export function ProjectsPage({ language, onLanguageChange }: ProjectsPageProps) 
                   <ImageWithFallback
                     src={enlargedImage}
                     alt="Enlarged view"
-                    className="max-w-full max-h-full w-auto h-auto object-contain"
+                    className={`max-w-full max-h-full w-auto h-auto object-contain ${selectedProject.slug === 'diy-stream-deck' || selectedProject.id === 'fallback-2' ? 'rotate-90' : ''}`}
                   />
                   
                   {/* Next Button */}
@@ -1086,7 +1086,7 @@ export function ProjectsPage({ language, onLanguageChange }: ProjectsPageProps) 
                     <ImageWithFallback
                       src={project.images[project.thumbnailIndex !== undefined && project.thumbnailIndex < project.images.length ? project.thumbnailIndex : 0]}
                       alt={language === 'cs' ? (project.titleCs || '') : project.title}
-                      className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                      className={`w-full h-full object-cover transition-transform duration-300 hover:scale-110 ${project.slug === 'diy-stream-deck' || project.id === 'fallback-2' ? 'rotate-90' : ''}`}
                     />
                   ) : (
                     <div className="w-full h-full bg-muted flex items-center justify-center">
