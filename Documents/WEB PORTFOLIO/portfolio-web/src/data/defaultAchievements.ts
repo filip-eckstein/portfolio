@@ -1,4 +1,6 @@
 // Default achievements data (certifications and competitions)
+import erasmusCert from "../assets/erasmus-malaga-cert.png";
+
 
 export default [
   {
@@ -57,5 +59,31 @@ export default [
     ],
     certificateImage: "",
     certificatePdf: "/certificate.pdf",
+  },
+  {
+    id: "achievement-erasmus-malaga",
+    type: "certification",
+    title: "Erasmus+ Internship in Málaga",
+    titleCs: "Erasmus+ stáž v Malaze",
+    subtitle: "Electronics, CAD, 3D printing, CNC Internship",
+    subtitleCs: "CAD, 3D tisk, CNC stáž Erasmus",
+    description: "I participated in a 2-week professional internship focusing on electronics, CAD and 3D printing in Malaga, Spain.",
+    descriptionCs: "Zúčastnil jsem se dvoutýdenní odborné stáže zaměřené na elektroniku, CAD a 3D tisk v Malaze ve Španělsku.",
+    issuer: "Forja Roja / Erasmus+",
+    issuerCs: "Forja Roja / Erasmus+",
+    skills: [
+      "Programming and use of microcontrollers",
+      "CAD Modeling & 3D Printing",
+      "CNC Machining",
+      "International Technical Collaboration"
+    ],
+    skillsCs: [
+      "programování a používání mikrokontrolerů",
+      "CAD modelování & 3D tisk",
+      "CNC obrábění",
+      "Mezinárodní technická spolupráce"
+    ],
+    certificateImage: erasmusCert,
+    certificatePdf: "",
   },
 ];

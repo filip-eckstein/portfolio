@@ -98,7 +98,7 @@ export function Hero({ language }: HeroProps) {
               {[
                 { icon: Award, text: achievement1Text, link: achievement1Link, type: content?.heroAchievement1Type },
                 { icon: Box, text: achievement2Text, link: achievement2Link, type: content?.heroAchievement2Type },
-                { icon: GraduationCap, text: language === 'cs' ? 'Stáž Erasmus' : 'Erasmus Internship', link: "https://erasmus-plus.ec.europa.eu", type: 'external' }
+                { icon: GraduationCap, text: language === 'cs' ? 'Stáž Erasmus' : 'Erasmus Internship', link: "/achievements#achievement-erasmus-malaga", type: 'achievement' }
               ].map((ach, i) => (
                 <div key={i} className="flex items-center gap-2 bg-muted/50 px-3 py-2 rounded-lg flex-shrink-0">
                   <ach.icon className="h-4 w-4 text-primary flex-shrink-0" />

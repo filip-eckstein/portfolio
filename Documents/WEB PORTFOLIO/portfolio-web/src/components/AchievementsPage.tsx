@@ -110,8 +110,21 @@ export function AchievementsPage({ language }: AchievementsPageProps) {
 
       if (response.ok) {
         const data = await response.json();
+        const remoteAchievements = data.achievements || [];
+        
+        // Import local default achievements to merge
+        const defaultAchievements = (await import('../data/defaultAchievements')).default;
+        
+        // Merge: prefer remote if already in remote, otherwise add local
+        const mergedAchievements = [...remoteAchievements];
+        defaultAchievements.forEach((local: any) => {
+          if (!mergedAchievements.find(r => r.id === local.id)) {
+            mergedAchievements.push(local);
+          }
+        });
+
         // Sort achievements by order (ascending), then by createdAt (descending) as fallback
-        const sortedAchievements = (data.achievements || []).sort((a: Achievement, b: Achievement) => {
+        const sortedAchievements = mergedAchievements.sort((a: any, b: any) => {
           if (a.order !== undefined && b.order !== undefined) {
             return a.order - b.order;
           }
@@ -203,8 +216,8 @@ export function AchievementsPage({ language }: AchievementsPageProps) {
               
               <div className="space-y-6">
                 {competitions.map((competition) => (
-                  <Card key={competition.id} className="overflow-hidden">
-                    <div className="grid md:grid-cols-2 gap-0">
+                  <Card key={competition.id} id={competition.id} className="overflow-hidden mb-8 border-none bg-muted/30">
+                    <div className="flex flex-col md:flex-row gap-6">
                       {competition.image && (
                         <div className="relative h-64 md:h-auto">
                           <img
@@ -339,7 +352,7 @@ export function AchievementsPage({ language }: AchievementsPageProps) {
 
               <div className="space-y-6 max-w-3xl mx-auto">
                 {certifications.map((cert) => (
-                  <Card key={cert.id}>
+                  <Card key={cert.id} id={cert.id}>
                     <CardHeader>
                       <div className="flex items-start justify-between mb-2">
                         <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
