@@ -86,14 +86,18 @@ export function AchievementsPage({ language }: AchievementsPageProps) {
   useEffect(() => {
     // Scroll to section based on hash
     const hash = window.location.hash;
-    if (hash === '#certifications') {
-      // Wait for content to load, then scroll
-      setTimeout(() => {
-        const element = document.getElementById('certifications');
+    if (hash) {
+      // Wait for content to load and render, then scroll
+      const timer = setTimeout(() => {
+        const element = document.querySelector(hash);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          // Add a temporary highlight effect
+          element.classList.add('ring-2', 'ring-primary', 'ring-offset-4');
+          setTimeout(() => element.classList.remove('ring-2', 'ring-primary', 'ring-offset-4'), 2000);
         }
-      }, 300);
+      }, 500);
+      return () => clearTimeout(timer);
     }
   }, [achievements]); // Run when achievements load
 
