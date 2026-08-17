@@ -36,6 +36,7 @@ interface Project {
   difficulty: "Beginner" | "Intermediate" | "Advanced";
   software: string[];
   material: string;
+  printer?: string;
   printingTechnology: "FDM" | "SLA";
   designSource: "My Design" | "Downloaded Model";
   materials: string[];
@@ -244,6 +245,7 @@ export function AdminDashboard({ token, onLogout, language }: AdminDashboardProp
     difficulty: 'Intermediate',
     software: ['Fusion 360'],
     material: 'PLA',
+    printer: 'Bambulab X2D s ams2pro',
     printingTechnology: 'FDM',
     designSource: 'My Design',
     materials: [],
@@ -323,24 +325,36 @@ export function AdminDashboard({ token, onLogout, language }: AdminDashboardProp
     if (!editingProject) return;
 
     try {
-      const url = editingProject.id && projects.find(p => p.id === editingProject.id)
+      const isExisting = editingProject.id && projects.some(p => p.id === editingProject.id);
+      const url = isExisting
         ? `https://${projectId}.supabase.co/functions/v1/make-server-635fd90e/admin/projects/${editingProject.id}`
         : `https://${projectId}.supabase.co/functions/v1/make-server-635fd90e/admin/projects`;
 
-      const method = editingProject.id && projects.find(p => p.id === editingProject.id) ? 'PUT' : 'POST';
+      const method = isExisting ? 'PUT' : 'POST';
 
-      console.log('💾 Saving project:', editingProject.id);
-      console.log('📝 Project title:', editingProject.title);
-      console.log('📦 Project data being saved:', {
-        id: editingProject.id,
-        title: editingProject.title,
-        duration: editingProject.duration,
-        durationCs: editingProject.durationCs,
-        material: editingProject.material,
-        printingTechnology: editingProject.printingTechnology,
-        specs: editingProject.specs,
-        specsCs: editingProject.specsCs,
-      });
+      // Ensure slug is populated
+      const autoSlug = editingProject.slug || 
+        (editingProject.title ? editingProject.title.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') : `project-${editingProject.id || Date.now()}`);
+
+      // Ensure date & dateValue are valid
+      const dateStr = editingProject.date || new Date().toISOString().slice(0, 7);
+      const parsedDateVal = parseInt(dateStr.replace('-', ''), 10);
+      const dateValue = isNaN(parsedDateVal) ? parseInt(new Date().toISOString().slice(0, 7).replace('-', ''), 10) : parsedDateVal;
+
+      const projectToSave = {
+        ...editingProject,
+        slug: autoSlug,
+        date: dateStr,
+        dateValue: dateValue,
+        projectCategory: editingProject.projectCategory || [],
+        images: editingProject.images || [],
+        specs: editingProject.specs || [],
+        references: editingProject.references || [],
+        filters: editingProject.filters || [],
+      };
+
+      console.log('💾 Saving project:', projectToSave.id);
+      console.log('📝 Project title & slug:', projectToSave.title, projectToSave.slug);
 
       const response = await fetch(url, {
         method,
@@ -349,23 +363,31 @@ export function AdminDashboard({ token, onLogout, language }: AdminDashboardProp
           'Authorization': `Bearer ${publicAnonKey}`,
           'X-Admin-Token': token,
         },
-        body: JSON.stringify(editingProject),
+        body: JSON.stringify(projectToSave),
       });
+
+      if (response.status === 401) {
+        toast.error('Relace vypršela. Přihlaste se prosím znovu.');
+        onLogout();
+        return;
+      }
 
       if (response.ok) {
         const result = await response.json();
         console.log('✅ Project saved, server response:', result);
-        toast.success('Project saved successfully');
+        toast.success(language === 'cs' ? 'Projekt úspěšně uložen' : 'Project saved successfully');
         setIsDialogOpen(false);
         setEditingProject(null);
-        // Add small delay to ensure data is written
         setTimeout(() => loadProjects(), 500);
       } else {
-        toast.error('Failed to save project');
+        const errorData = await response.json().catch(() => ({}));
+        const msg = errorData.error || errorData.details || response.statusText;
+        console.error('Failed to save project:', msg);
+        toast.error(`Chyba při ukládání projektu: ${msg}`);
       }
     } catch (error) {
       console.error('Error saving project:', error);
-      toast.error('Failed to save project');
+      toast.error(`Chyba při ukládání projektu: ${error instanceof Error ? error.message : String(error)}`);
     }
   };
 
@@ -1022,14 +1044,14 @@ export function AdminDashboard({ token, onLogout, language }: AdminDashboardProp
                     {project.description}
                   </p>
                   <div className="flex flex-wrap gap-1 mb-2">
-                    {project.projectCategory.map((cat, idx) => (
+                    {(project.projectCategory || []).map((cat, idx) => (
                       <Badge key={idx} variant="outline" className="text-xs">
                         {cat}
                       </Badge>
                     ))}
                   </div>
                   <div className="flex items-center justify-between text-xs text-muted-foreground">
-                    <span>{project.images.length} image(s) • {project.date}</span>
+                    <span>{(project.images || []).length} image(s) • {project.date || 'N/A'}</span>
                     {project.references && project.references.length > 0 && (
                       <Badge variant="outline" className="text-xs">
                         <LinkIcon className="h-3 w-3 mr-1" />
@@ -1373,6 +1395,40 @@ export function AdminDashboard({ token, onLogout, language }: AdminDashboardProp
                     </div>
                   )}
                 </div>
+              </div>
+
+              {/* 3D Printer Selection */}
+              <div>
+                <Label>3D Printer / Tiskárna</Label>
+                <Select
+                  value={editingProject.printer || 'Bambulab X2D s ams2pro'}
+                  onValueChange={(val) => {
+                    const tech = val === 'Prusa SL1S' ? 'SLA' : 'FDM';
+                    setEditingProject({
+                      ...editingProject,
+                      printer: val,
+                      printingTechnology: tech
+                    });
+                  }}
+                >
+                  <SelectTrigger className="mt-1">
+                    <SelectValue placeholder="Vyberte tiskárnu" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="Bambulab X2D s ams2pro">Bambulab X2D s ams2pro</SelectItem>
+                    <SelectItem value="Bambulab X2D">Bambulab X2D</SelectItem>
+                    <SelectItem value="Prusa SL1S">Prusa SL1S</SelectItem>
+                    {editingProject.printer && 
+                     !['Bambulab X2D s ams2pro', 'Bambulab X2D', 'Prusa SL1S'].includes(editingProject.printer) && (
+                      <SelectItem value={editingProject.printer}>
+                        {editingProject.printer} (Původní / Starší tiskárna)
+                      </SelectItem>
+                    )}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground mt-1">
+                  Dostupné tiskárny pro nové projekty: Bambulab X2D s ams2pro, Bambulab X2D, Prusa SL1S. Starší projekty zůstávají beze změny.
+                </p>
               </div>
 
               {/* Category - EN & CS (Legacy field for display) */}

@@ -50,6 +50,16 @@ export function FiltersManager({ token, onFiltersUpdated }: FiltersManagerProps)
       ]
     },
     {
+      id: 'printers',
+      name: '3D Printers',
+      nameCs: '3D Tiskárny',
+      options: [
+        { value: 'Bambulab X2D s ams2pro', label: 'Bambulab X2D s ams2pro', labelCs: 'Bambulab X2D s ams2pro' },
+        { value: 'Bambulab X2D', label: 'Bambulab X2D', labelCs: 'Bambulab X2D' },
+        { value: 'Prusa SL1S', label: 'Prusa SL1S', labelCs: 'Prusa SL1S' },
+      ]
+    },
+    {
       id: 'printingTech',
       name: 'Printing Technologies',
       nameCs: 'Tiskové technologie',

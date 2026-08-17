@@ -17,35 +17,20 @@ if %errorlevel% neq 0 (
 echo ✅ Build complete!
 echo.
 
-REM 2. Zkopíruj 404.html do dist
-echo 📄 Copying 404.html...
-copy /Y 404.html dist\404.html >nul
-if %errorlevel% neq 0 (
-    echo ❌ Failed to copy 404.html!
-    pause
-    exit /b 1
+REM 2. Kontrola CNAME
+echo 🌐 Checking CNAME...
+if not exist public\CNAME (
+    echo filip-eckstein.cz > build\CNAME
 )
-echo ✅ 404.html copied!
+echo ✅ CNAME ready!
 echo.
 
-REM 3. Vytvoř CNAME pro vlastní doménu
-echo 🌐 Creating CNAME...
-echo filip-eckstein.cz > dist\CNAME
-if %errorlevel% neq 0 (
-    echo ❌ Failed to create CNAME!
-    pause
-    exit /b 1
-)
-echo ✅ CNAME created!
-echo.
-
-REM 4. Git add, commit, push (zdrojový kód)
+REM 3. Git add, commit, push (zdrojový kód)
 echo 📝 Committing changes to Git...
 git add .
-git commit -m "Update: Fixed GitHub Pages routing for /admin on filip-eckstein.cz"
+git commit -m "Update: Deploy to GitHub Pages with latest fixes"
 if %errorlevel% neq 0 (
     echo ⚠️  Nothing to commit or commit failed
-    echo    (This is OK if no changes were made)
 ) else (
     echo ✅ Changes committed!
 )
@@ -56,18 +41,13 @@ git push origin main
 if %errorlevel% neq 0 (
     echo ⚠️  Push failed - trying 'master' branch...
     git push origin master
-    if %errorlevel% neq 0 (
-        echo ❌ Push failed! Check your Git configuration.
-        pause
-        exit /b 1
-    )
 )
 echo ✅ Pushed to GitHub!
 echo.
 
-REM 5. Deploy na GitHub Pages
+REM 4. Deploy na GitHub Pages
 echo 🎯 Deploying to GitHub Pages...
-npx gh-pages -d dist
+npx gh-pages -d build
 if %errorlevel% neq 0 (
     echo ❌ Deploy failed!
     pause

@@ -1,5 +1,5 @@
 {
-      "name": "portfolio (Copy)",
+      "name": "filip-eckstein-portfolio",
       "version": "0.1.0",
       "private": true,
       "dependencies": {
@@ -67,6 +67,7 @@
       },
       "scripts": {
             "dev": "vite",
-            "build": "vite build"
+            "build": "vite build",
+            "deploy": "npm run build && node scripts/deploy-gh-pages.mjs"
       }
 }
